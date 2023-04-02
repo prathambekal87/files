@@ -1,0 +1,401 @@
+
+>>Integration/Middleware
+- Middleware is software that links 2 separate applications or is commonly used to illustrate different products that function as a
+  the glue between 2 separate applications.
+	
+	> Application Integration(A2A)
+       - Integrates various company-managed applications together, including cloud-based and remote systems.
+	> B2B Integration
+    	 - Integrates customer, provider, and various alternative partner interfaces with various data resources and company-managed 	 	 	   applications
+	> Cloud Integration
+	 - Integrates with and also between cloud services, cloud-based applications(SaaS), Private clouds, trade hubs, and other typical
+	   cloud resources through web services and standard B2B communication strategeis(FTP,AS2 ..)
+
+>> Mulesoft
+- Design and build APIs and Integrations at lightning speed 
+  Build APIs Integrations faster using reusable assets with clicks or code- through a web interface or desktop IDE
+ >Mule: 
+	- Mule is the runtime engine of Anypoint Platform, is a lightweight Java-based enterprise service bus(ESB)
+        and Integration platform that allows developers to connect applications together quickly and easily,
+        enabling them to exchange data.
+
+>> Mulesoft Components
+	> Runtime Plane 
+      	- Mule runtime 
+              : Mule runtime is the engine for connecting applications, data, and devices.
+	> Control Plane
+		- Anypoint.mulesoft.com ( Anypoint Platform)
+
+>> Anypoint Platform
+- Design Center: To Design the integrations
+- Anypoint Exchange: To Share the Assets
+- Runtime Manager: To Deploy and manage applications
+- API Manager: To secure APIs with policies, etc...
+- Access Management: To configure access and permissions and audit logs etc.( user management)
+- Anypoint Monitoring: To monitor the apps integrations
+
+>> Anypoint studio
+
+>> Dataweave 
+- Mulesoft expression language for accessing and transforming data that travels through the mule app.
+
+
+
+
+-----------------
+
+VM COnnector
+
+>> publish - It is asynchronous
+>> Publish consume - It work synchronously 
+
+For Each
+- Process in sequentially
+
+Scatter Gather
+> Scatter-Gather sends a request message to multiple targets concurrently (Parallely)
+> it needs atleast 2 
+> Consolidate the payload and give as output 
+
+Batch Processing
+- Process in Parallaly
+- process large set of data(Can be used To bulk sync from system to another Parallaly)
+
+
+
+>> domain project
+
+- To share resource
+- to reuse the configutaion for different project
+- mainly used for on premise mule run time, where different projects to share the configurations
+- don't have message flow
+
+>> Async scope flow
+- it will work parallelly ,simultnouesly
+
+>> Round roubin
+- it will go to any one of route each time , and next time it will go to other
+were we can use for load balancing and all
+
+>> cache
+- it will store data for temperorly so it can increase the performance ,instead of calling the api everytime
+- instead of taking from backend everytime we can use cache function
+- we can use the object store also here.
+
+>>parse tempelate
+- we can change the format or make it into one template and get data ( like html..)
+
+
+>> Secure configuration
+
+java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+<method> \
+<operation> \
+<algorithm> \
+<mode> \
+<key> \
+<value> \
+--use-random-iv [optional]
+
+
+java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string encrypt Blowfish CBC mulesoft "parammal87"
+
+java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string encrypt Blowfish CBC mulesoft "9mNdfRNli0gvI9wRODmX4oPl"
+
+
+>> Invoke java method
+- we can invoke java static method using "invoke static"(Here no need to create instance of class using "new"),
+- and can invoke non static method using "invoke"(Using "new" connector for creating the instance of class)
+-(A static method is a class method and belongs to the class itself. This means you do not need an instance in order to use a static method. 
+ A non-static method is an instance method and belongs to each object that is generated from the class.)
+
+
+>> SAP Connector
+- IDoc : Intermediate document (idoc) is a stanadard data structure used in SAP applications to tranfer data to and from 
+SAP system applications and external system.
+- IDoc are used used for asynchronous transactions
+- There is inbound IDoc(sending idoc to sap ("2")) & Outbound IDoc(Reciveing idoc from sap("1"))
+
+>> IBM MQ connector
+- we can "Publish" the message to the ibm mq by giving all the desired configurations
+
+>>Email Connector
+- Email connector need a email server(SMTP) so that using that we can send etc.. with the email connectors..
+
+>>First successfull router
+- if one routes successfully works then it will come out and it won't execute other routes,or else it will go to next route.
+
+>>Untill successful scope
+-till successfull we can try no.of times , so it will try untill successful
+-like calling one webservice which is busy when connecting so it will try untill successsfull based on reties and time given
+
+>>webservice consumer
+- we can call any soap webservice using wsdl
+
+>>Munit testing
+-unit testing framework from mulesoft
+-first set munit support then create a blank munit test
+-in munit it will go to process section directly from flowreference so we have to set it using the "set event" and can validate 
+using "assert equals" and all.
+
+>>Json Schema validation
+- we can validate the json using json validate schema
+- So here we can validte the incoming json using schema that set, if it validates correctly then it will give the 200 success,
+else it will throw 500 error status.
+
+>>Vaidation Module
+- here we can validate incoming email,number etc using validation module connector like "is email"
+- using this we can set weather the email is proper and validate the same if it is proper then it will send 200 suceess else it will 
+throw the 500 error
+
+--------------------------------
+
+Anypoint Platform::
+
+
+>>Anypoint Exchange
+-We can publish our assets,so every one can resuse that in the organization.
+-we can mock and try the apis in exchnage
+
+>>Design center
+-Design the api and design application integration
+-
+
+>>Api manager
+- Manage clients, policies,SLAs, Traffic etc..
+- orchestration layer
+- Here we can the policies,
+	>Rate limiting policy
+		- setting how times the request can be accessed.
+
+
+
+
+>>Runtime Manager
+-API Buisness Logic
+-Implementation layer
+
+> API Autodiscovery
+
+- can act as a layer betweeen api manager & runtime manager
+
+- By using api auto discovery we can set policies in api manager without creating any other application(like proxy application)
+
+- So here we first we add the api in api manager and use the api id,anypoint.platform.client_id,anypoint.platform.client_secret to connect 
+with application that we are deploying in the cloudhub runtime manager
+
+-And in the application we are deploying in cloud hub , before deploying we can set the api-id in auto discovery also the client_id,secret
+in the properties of the application
+
+-So while deploying it to the cloudhub the application will we registerd(paired) with the api in api manager
+So in api manager we can set defferent types of policies for the application.
+
+
+
+------------------------------------
+
+Extra Topics Covered:
+
+>>AnyPoint MQ::
+
+- An anypoint subsription feature,specially to handle queue based scenariors
+
+>Queue
+-A queue is a temporary storage area used for inter-app communication, to tranfer the message from one API/Service to another
+
+>AnyPoint MQ
+- it is a cloud messaging service that performs asynchronous messaging scenarios between applications.
+- it supports large payloads(upto 10mb)
+- it enables easy connection to non-mule applications using REST API.
+- it provides a special feature called Dead-Letter Queue(DLQ)
+
+Limitations:
+- only avilable in enterprise subscription account not for trial account
+- only avialbale for cloud hosted appliactions,not for apis hosted on-permise etc..
+
+> Types of Queue:
+	1. Queue (standard Queue)
+	2. FIFO Queue(First in First Out)
+	BroadCast/Queue:
+		1.Exchange
+
+> 1.Queue(Standard Queue)
+- Storage area have messages where an application/service can send and receive messages to a queue in an "unordered manner"
+- we can store an unlimited no.of messages in queue
+- from API, we can 'pick maximum 1,20,000 messages randomly at a time.
+- From UI, we can 'view maximum 50 messages at a time'
+
+> 2.FIFO Queue(First In First Out)
+- it is same as a standard queue, but here "ordering of messages is maintained"
+- we can store an unlimited number of messages in FIFO Queue.
+- To ensure the ordering of messages it is 'restricted to pick 10 messages per processing state' from both API as well as from UI
+
+>3.Exchange
+- used to "Broadcasting messages to a Queue"
+- We can create an Exchange and bind other queues into an Exchange, so that whatever messages get Published/send to an Exchange, those
+messages will get Broadcast/Forwarded to all Queues associated with the Exchange.
+Eg: Broadcast feature in whatsApp
+
+>We can 'create N number (Unlimited) Queues'
+- Every queue has 2 stages:
+	- In-Queue:
+		-Which holds all the messages got created/published into queue
+		-Ready for proceesing whenever needed.
+	- In-Flight:
+		-Once Subscriber/consumer start consuming the Queue, the messages will 'move from "In-Queue" state -> "In-Flight" State'
+		-under prcoessing
+		-'Messages under "In-Flight" are Locked',those messages cannot be fetch by some other subsciber/consumer.
+
+>In UI(paltform) we can create the client app,so by using the id,secret and url we can access all the queues that are present.
+
+> In studio we have anypoint mq,
+	1. Publish
+	- To publish/send the messages to the Queue which is already available/created in the AnyPoint MQ
+	- "Its a processor"
+	2. Subscribe
+	- Subscribe the Queue and "listen to the new messages" and pick it.
+	- whenever queues recives any new messages,subscriber will automatically start trigger, and fetches the messages.
+	- "Its a source"
+	3. Consume
+	- Used to consume messages from the Queue.
+	- we can use consume to "consume the messages anywhere in the flow" execution.
+	- "Its a processor"
+	4. ACK
+	- Positive acknowledgement
+	- To manually send a Positive Acknowledgement to the Queue about the successful consumption of the messages
+	- "Its a Processor"
+	- "messages will be deleted from the queue"
+	5. NACK
+	- Negative acknowledgement
+	- To manually send a Negative Acknowledgement to the Queue, stating the consumed message is unprocessed
+	- "Its a Processor"
+	- "messages remains in the queue"
+
+> Dead Letter Queue(DLQ)
+- when a queue/fifo queue fails again again , so we can create a some DLQ (queue dlq for queue and fifo queue for fifo) so that
+the failed message in the queue will transfer to the respective dlq
+- so we can track here the failed messages
+
+>>CI/CD 
+
+> We use "Github": Repository to store all the code so people can access it
+
+> Also using "Gitbash" should be installed in pc
+
+- In Github, For each project we have to create a New Repository
+
+- We can create multiple branches for a repository(main is the default repository)
+
+> To get the mulesoft project in to github,first create a folder in local
+
+	- Then copy the url "HTTPS(<Code>)" of the repository
+
+	- After that go to folder created in the local , right click and selecy "Git Bash Here"
+
+	- give command "git clone 'the url you have copied", so it will create folder in that respcetive folder
+
+	- Then you can go to that newely created folder by using command " cd 'folder name' ", so it will go to that new folder also 
+	  it shows which branch(eg: main)  of the repository we have downloaded into our local 
+
+	- You can switch the branch by giving command " git checkout develop", (develop is the other branch that already created in 
+	  github repo)
+
+	- To Commit the project into github, first go to project in the mulesoft studio, select the project and right click and select 
+	  showin and select System Explorer(so it will take us to the files of project)
+
+	- so we can copy all the folders and files of that project from that folder and paste it to the repo folder that we have created
+
+	- Now Go back to the git bash and command "git status", it will show you all the files changed and modified 
+
+	- Now to add this changed/modified files we can command " git add file/foldername" else to add all "git add *" (so we can check 
+	  the status git status it will show the added files/folder)
+
+	- So to commit all the added files/folder to the github we can use "git commit -m "the commit reason"" and at last "git push" from
+	  the perticualr branch , so it will push the code to the specific branch in the repository in github (You can see that in the 
+	  github)
+
+	-To push the code into main branch you can select 'pull request' in github, it will show from where to where we are pushing the 
+         code and you can select the 'create a pull request'(Aothorised people can accept the request so it will push to main branch in 
+         the repository).
+
+> Also To make the changes in mule studio for the existing project in the github
+
+	- clone the project into local(use the same above steps)
+	
+	- copy the HTTPS url of the project in the repo
+
+	- In the local use in the perticular folder right click and git bash command " git clone 'url' "
+
+	- the new folder will present of that repo, just use that project in mulesoft studio 
+
+	- use import>anypoint studio>anypoint studio project file system select the project folder as the new folder of that repository
+
+	- if you select the 'copy the project into workspace' the copy of project is created in local folder and chnages will reflected 
+          there else instead of that cloned folder, so after making any changes we need to copy that changes from local folder to that
+	  clone folder and can push the changes into github.
+
+> To run the application in cloudhub we can directly upload project jar file in runtime manager and set it up else
+
+> Else we can use Jenkins CI/CD , where we need to install jenkins(installed locally in 8080, with username and password set it up)
+
+	- Check whether java ,maven,git installed in the system(check using java -version,mvn --version,git --version in cmd)
+
+	- First we can create a job(select create job/new item) ,Enter item name
+	
+	- select freestyle project and select ok
+	
+	-Now you can give the discription and all, Check if source code management Git option available or not.
+
+	-If not available download from manage jenkins and restart 
+
+	-if available select Git,
+		In Repository url give the HTTPS clone url of that project repository
+	
+	-provide the credentials(username,password of github)
+
+	-provide the branch(whether main,develeop etc..)
+
+	-In Build(since your using windows) select Execute windows batch command
+
+	-{Before in the project Pom.xml provide maven plugin,
+		and add cloud deplyment configuration details,
+
+		  <configuration>
+    			<cloudHubDeployment>
+
+      				<uri>https://anypoint.mulesoft.com</uri>
+      				<muleVersion>${mule.version}</muleVersion>
+      
+				<!--Deploy user Parameter-->
+
+				<username>${anypoint.username}</username>
+      				<password>${anypointpassword}</password>
+      
+				<environment>${env}</environment>
+				<applicationName>${appname}</applicationName>
+      				<businessGroup>${busniess}</businessGroup>
+      				<region>${region}</region>
+      				<workers>${workers}</workers>
+      				<workerType>${vCore}</workerType>
+				<objectStoreV2>true</objectStoreV2>
+      				<properties>
+        				<key>value</key>
+      				</properties>
+    			</cloudHubDeployment>
+  		</configuration>
+	 }
+	
+	-In the command section write the below command:
+
+		mvn clean deploy -DmuleDeploy -DskipTests -Dmule.version=4.3.0 -
+		Danypoint.username=yourusername -Danypoint.password=yourpassword -Denv=Sandbox -
+		Dappname=myfirst -Dbusiness=MuleSoft -DvCore=Micro -Dworkers=1 -
+		DaltDeploymentRepository=myinternalrepo::default::file:///C:/snapshots
+
+		{Here we are passing all the values for the paramter that we have defined in pom.xml}
+		Then select apply
+
+	-Now we can go DashBoard>select the Project> select Buid Now
+		it will build the project in jenkins
+		And the Projecr will be deployed in cloudhub(runtime manager) from jenkins using the mule-maven plugin where the code 
+		stored in the github repository 
